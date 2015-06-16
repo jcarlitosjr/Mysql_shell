@@ -17,8 +17,9 @@ USER="root"
 PASSWORD="root"
 OUTPUT="/usr/local/backup"
  
-rm "$OUTPUT/*gz" > /dev/null 2>&1
- 
+
+find "$OUTPUT" -type f -mtime 2 -exec rm {} \;
+
 databases=`mysql --user=$USER --password=$PASSWORD -e "SHOW DATABASES;" | tr -d "| " | grep -v Database`
  
 for db in $databases; do
